@@ -1,0 +1,4 @@
+rootProject.name = 'sn'
+include 'core'
+include 'api'
+

@@ -1,0 +1,70 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+group = 'ru.nutscoon'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+	all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+		exclude group: 'ch.qos.logback', module: 'logback-classic'
+		exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+	}
+}
+
+repositories {
+	mavenCentral()
+	jcenter()
+}
+
+
+allprojects {
+	apply plugin: 'java'
+
+	repositories {
+		mavenCentral()
+		jcenter()
+	}
+
+	dependencies {
+		ext.springVer = "2.2.4.RELEASE"
+
+		implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springVer}"
+		implementation "org.springframework.boot:spring-boot-starter-security:${springVer}"
+		implementation "org.springframework.boot:spring-boot-starter-web:${springVer}"
+		compile "org.codehaus.groovy:groovy-all:2.5.4"
+		compile "io.i-t:bobbin:2.0.11"
+	}
+}
+
+dependencies {
+	ext.springVer = "2.2.4.RELEASE"
+
+	compile "org.codehaus.groovy:groovy-all:2.5.4"
+	compile "io.i-t:bobbin:2.0.11"
+
+	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.10'
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+	testCompile("junit:junit:4.12")
+	testCompile("org.springframework.boot:spring-boot-starter-test")
+
+	compile project(":core")
+	compile project(":api")
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+}
+
+test {
+	useJUnitPlatform()
+}

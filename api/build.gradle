@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group 'ru.nutscoon'
+version '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    ext.springVer = "2.2.4.RELEASE"
+
+    compile project(":core")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test:${springVer}") {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
